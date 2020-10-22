@@ -37,12 +37,16 @@ print('Message sent.\n')
 
 # Getting ready to receive a response.
 # Loop over messages
+count = 0
 while True:
     resp = responseQueue.receive_messages(
         MessageAttributeNames=['All'], WaitTimeSeconds=15)
     if len(resp) != 0:
         print(resp[0].body)
+        count += 1
         resp[0].delete()
+        if count == 4:
+            break
     else:
         print('No answers received from the server')
         break
