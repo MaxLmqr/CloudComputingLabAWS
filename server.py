@@ -3,7 +3,7 @@ import time
 
 # Get the service resource
 sqs = boto3.resource('sqs', region_name='us-east-1')
-
+s3 = boto3.client("s3")
 
 def average(L):
     return sum(L)/len(L)
@@ -36,6 +36,11 @@ while True:
         mean = average(p_mess)
         minimum = min(p_mess)
         maximum = max(p_mess)
+        med = median(p_mess)
+        body = 'Moyenne : ' + str(mean) + ' Minimum : ' + str(minimum) + ' Maximum : ' + str(maximum) + ' Median : ' + str(med)
+        s3.put_object(Body=body, Bucket='mybucket974',
+              Key='logs/results.txt')
+        print('Response written into logs.')
         mean_response = {
             'Id': '1',
             'MessageBody': 'Moyenne : ' + str(mean),
@@ -50,7 +55,7 @@ while True:
         }
         median_response = {
             'Id': '4',
-            'MessageBody': 'Median : ' + str(maximum),
+            'MessageBody': 'Median : ' + str(med),
         }
         responseQueue.send_messages(Entries=[mean_response])
         responseQueue.send_messages(Entries=[min_response])
@@ -60,3 +65,7 @@ while True:
     else:
         print("No request yet.")
 
+
+
+s3.put_object(Body="Hello s3", Bucket='mybucket974',
+              Key='mykey/anotherfilename.txt')
