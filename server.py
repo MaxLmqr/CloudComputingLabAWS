@@ -55,6 +55,7 @@ while True:
         responseQueue.send_messages(Entries=[mean_response])
         responseQueue.send_messages(Entries=[min_response])
         responseQueue.send_messages(Entries=[max_response])
+        responseQueue.send_messages(Entries=[median_response])
         print('Responded.')
     else:
         print("No request yet.")
