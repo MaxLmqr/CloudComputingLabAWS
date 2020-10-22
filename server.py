@@ -5,8 +5,10 @@ import time
 sqs = boto3.resource('sqs', region_name='us-east-1')
 s3 = boto3.client("s3")
 
+
 def average(L):
     return sum(L)/len(L)
+
 
 def median(L):
     L.sort()
@@ -37,9 +39,10 @@ while True:
         minimum = min(p_mess)
         maximum = max(p_mess)
         med = median(p_mess)
-        body = 'Moyenne : ' + str(mean) + ' Minimum : ' + str(minimum) + ' Maximum : ' + str(maximum) + ' Median : ' + str(med)
+        body = 'Moyenne : ' + str(mean) + ' Minimum : ' + str(minimum) + \
+            ' Maximum : ' + str(maximum) + ' Median : ' + str(med)
         s3.put_object(Body=body, Bucket='mybucket974',
-              Key='logs/results.txt')
+                      Key='logs/results.txt')
         print('Response written into logs.')
         mean_response = {
             'Id': '1',
@@ -64,8 +67,3 @@ while True:
         print('Responded.')
     else:
         print("No request yet.")
-
-
-
-s3.put_object(Body="Hello s3", Bucket='mybucket974',
-              Key='mykey/anotherfilename.txt')
