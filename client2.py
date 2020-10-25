@@ -45,3 +45,4 @@ while True:
         break
     else:
         print('No answers received from the server')
+        break

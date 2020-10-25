@@ -1,0 +1,48 @@
+How to use it ?
+
+First part.
+You have to fill the input.txt file with integers. They must be separated by a line break. 
+For instance :
+####### input.txt ######## 
+1
+2
+3
+4
+5
+##########################
+You have to be sure that the server is running. It is supposed to be running on EC2 instance.
+Then you just have to run client.py, and you will have a few indications about the process, before the results, which should look like :
+######### stdout #########
+Moyenne : 3
+Maximum : 5
+Minimum : 1
+Median : 3
+##########################
+
+
+Second Part.
+You have to name the image you want to process with the following name : "image.jpg"
+Check that the worker is up. It can be running either on your terminal, or on an EC2 instance.
+Then you can run client2.py, which should upload your image on s3, then download the processed image.
+You will have a new file named "output.jpg" in your directory.
+
+
+INFORMATIONS : 
+
+client.py and server.py concern the first part of the lab.
+Server.py should be running permanently on EC2, and is listening for new message in the requestQueue. When a new message is received, it loads its content and compute results.
+It then sends them back in a message to the responseQueue.
+client.py is used by the client with the procedure described above.
+
+
+client2.py and server2.py concern the second part of the lab. We want to automatically process some image on a worker running on EC2 platform.
+server2.py should be running permanently on EC2, and is listening for new messages in the requestQueue. Messages should be containing  a key to an image stored on s3.
+The image is downloaded, processed by the worker, and the result is uploaded back on s3. A message is sent to responsequeue containing the new key targetting the processed image.
+client2.py is used by the client with the procedure described above. The image is uploaded on S3, then its key is sent to requestQueue. Then it waits for a message in responseQueue containing the 
+key which should target the processed image. We download and store this new image with the name "output.jpg".
+
+
+You can also check the videos for a practical example.
+demonstration.mp4 shows the first part.
+demonstration_2.mp4 show the second part.
+
